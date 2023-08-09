@@ -2,28 +2,34 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { Cardgames } from './cardgames.entity';
-// import { RegisterDetail } from './user.model';
+import { CardgamesDetail } from './cardgames.model';
+
 
 @Injectable()
 export class CardgamesService {
-  // constructor(
-  //   @InjectRepository(Cardgames)
-  //   private _cardRepository: Repository<Cardgames>
-  // ) { }
 
-  // register(model: RegisterDetail): string {
-  //   const user = this._userRepository.find({ where: { email: model.email } });
-  //   if (user) {
-  //     throw 'You have alredy registered, Please try to login'
-  //   } else {
-  //     this._userRepository.save({
-  //       firstName: model.firstname,
-  //       isActive: true,
-  //       isDeleted: false,
-  //       lastName: model.lastname
-  //     });
-  //     return 'You are registered successfully.'
-  //   }
-  //   return 'Hello World!';
-  // }
+
+  constructor(
+    @InjectRepository(Cardgames)
+    private _cardgameRepository: Repository<Cardgames>
+  ) { }
+
+  cardgamehistory(model: CardgamesDetail): string {
+    const user = this._cardgameRepository.find({ where: { userId: model.userId } });
+    if (user) {
+      this._cardgameRepository.save({
+        message: model.message,
+        userId: model.userId,
+        isActive: true,
+        isDeleted: false,
+        iswin: true,
+        createdBy: 0,
+        createdDate: new Date(),
+        modifyBy: 0,
+        modifyDate: new Date(),
+        roleId: 2
+      });
+      return 'You are registered successfully.'
+    }
+  }
 }

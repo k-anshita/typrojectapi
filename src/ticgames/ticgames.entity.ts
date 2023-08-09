@@ -1,18 +1,20 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { User } from "src/user/user.entity";
+import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Ticgames {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @OneToOne(() => User)
+  @JoinColumn()
+  user: User
+
   @Column()
   message: string;
 
   @Column()
-  email: string;
-
-  @Column({ default: true })
-  iswin: boolean;
+  userId: number;
 
   @Column({ default: true })
   isActive: boolean;

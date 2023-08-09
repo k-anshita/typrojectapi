@@ -11,10 +11,22 @@ export class User {
     role: Role
 
     @Column()
-    name: string;
+    firstname: string;
+
+    @Column()
+    lastname: string;
 
     @Column()
     email: string;
+
+    @Column()
+    username: string;
+
+    @Column()
+    gender: string;
+
+    @Column()
+    date: Date;
 
     @Column()
     password: string;

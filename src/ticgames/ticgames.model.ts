@@ -1,8 +1,9 @@
 import { ApiProperty } from "@nestjs/swagger";
 
-export class CardgamesDetail {
+export class TicgamesDetail {
     @ApiProperty()
     message: string;
     @ApiProperty()
     userId: number;
 }
+

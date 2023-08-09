@@ -1,13 +1,13 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { CardgamesService } from './cardgames.service';
-import { RegisterDetail } from './cardgames.model';
+import { CardgamesDetail } from './cardgames.model';
 
-@Controller('cardgames')
+@Controller('cardwinner')
 export class CardgamesController {
   constructor(private readonly cardgamesService: CardgamesService) { }
 
-  // @Post('register')
-  // register(@Body() model: RegisterDetail): string {
-  //   return this.cardgamesService.register(model);
-  // }
+  @Post('cardgamehistory')
+  cardgamehistory(@Body() model: CardgamesDetail): string {
+    return this.cardgamesService.cardgamehistory(model);
+  }
 }

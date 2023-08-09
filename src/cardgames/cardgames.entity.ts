@@ -1,14 +1,22 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { User } from "src/user/user.entity";
+import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Cardgames {
     @PrimaryGeneratedColumn()
     id: number;
 
+    @OneToOne(() => User)
+    @JoinColumn()
+    user: User
+
     @Column()
     message: string;
 
-    @Column({default:true})
+    @Column()
+    userId: number;
+
+    @Column({ default: true })
     iswin: boolean;
 
     @Column({ default: true })
