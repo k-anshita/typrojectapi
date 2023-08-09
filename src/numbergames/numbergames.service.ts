@@ -3,6 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { And, IsNull, Repository } from "typeorm";
 import { NumbergamesDetail } from './numbergames.model';
 import { Numbergames } from './numbergames.entity';
+import { swagger_api_response } from 'src/common/swaggerApiResponse.entity';
 
 
 
@@ -14,11 +15,10 @@ export class NumbergamesService {
     private _numbergameRepository: Repository<Numbergames>
   ) { }
 
-  numbergames(model: NumbergamesDetail): string {
+  async numbergames(model: NumbergamesDetail): Promise<swagger_api_response> {
     const user = this._numbergameRepository.find({ where: { userId: model.userId } });
     if (user) {
-      // throw ''
-      this._numbergameRepository.save({
+      await this._numbergameRepository.save({
         message: model.message,
         userId: model.userId,
         iswin: true,
@@ -30,18 +30,15 @@ export class NumbergamesService {
         modifyDate: new Date(),
         roleId: 2
       });
-      return 'You are registered successfully.'
+      const data = new swagger_api_response();
+      data.code = 200;
+      data.isSuccess = true;
+      data.message = 'game report is added!';
+      return data;
     }
-    // else {
-    //   this._numbergameRepository.save({
-    //     message: model.message,
-    //     userId: model.userId,
-    //     iswin: true,
-    //     isActive: true,
-    //     isDeleted: false,
-    //   });
-    //   return 'You are registered successfully.'
-    // }
+    else {
+      throw new Error('user does not exists')
+    }
 
   }
 

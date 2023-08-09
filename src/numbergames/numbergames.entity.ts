@@ -16,12 +16,6 @@ export class Numbergames {
   @Column()
   message: string;
 
-  @Column()
-  email: string;
-
-  @Column({ default: true })
-  iswin: boolean;
-
   @Column({ default: true })
   isActive: boolean;
 

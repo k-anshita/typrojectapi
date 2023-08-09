@@ -17,9 +17,6 @@ export class Cardgames {
     userId: number;
 
     @Column({ default: true })
-    iswin: boolean;
-
-    @Column({ default: true })
     isActive: boolean;
 
     @Column({ default: false })
