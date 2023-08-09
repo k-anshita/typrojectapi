@@ -13,10 +13,9 @@ export class TicgamesService {
     private _ticgameRepository: Repository<Ticgames>
   ) { }
 
-  async ticgamehistory(model: TicgamesDetail):Promise<swagger_api_response> {
+  async ticgamehistory(model: TicgamesDetail): Promise<swagger_api_response> {
     const user = this._ticgameRepository.find({ where: { userId: model.userId } });
     if (user) {
-      // throw ''
       await this._ticgameRepository.save({
         message: model.message,
         userId: model.userId,
@@ -37,14 +36,14 @@ export class TicgamesService {
       data.message = 'game report is added!';
       return data;
     }
-     else {
+    else {
       // this._ticgameRepository.save({
       //   message: model.message,
       //   userId: model.userId,
       //   iswin: true,
       //   isActive: true,
       //   isDeleted: false,
-      
+
       // });
       // return 'You are registered successfully.'
       // const data = new swagger_api_response();
@@ -55,6 +54,6 @@ export class TicgamesService {
 
     }
     // return 'Hello World!';
-    
+
   }
 }
