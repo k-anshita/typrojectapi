@@ -1,7 +1,13 @@
+import { ApiProperty } from "@nestjs/swagger";
+
 export class ReviewDetail {
+    @ApiProperty()
     name: string;
+    @ApiProperty()
     message: string;
+    @ApiProperty()
     email: string;
+    @ApiProperty()
     subject: string;
     // iswin: Boolean;
     // isActive: boolean;
