@@ -4,7 +4,7 @@ import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "ty
 @Entity()
 export class Ticgames {
   @PrimaryGeneratedColumn()
-  id: number;
+  ticid: number;
 
   @OneToOne(() => User)
   @JoinColumn()
