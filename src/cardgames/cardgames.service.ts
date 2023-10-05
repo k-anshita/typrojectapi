@@ -16,7 +16,7 @@ export class CardgamesService {
   ) { }
 
   async cardgamehistory(model: CardgamesDetail): Promise<swagger_api_response> {
-    const user = this._cardgameRepository.find({ where: { userId: model.userId } });
+    const user = await this._cardgameRepository.find({ where: { userId: model.userId } });
     if (user) {
       await this._cardgameRepository.save({
         message: model.message,
@@ -34,6 +34,21 @@ export class CardgamesService {
       data.code = 200;
       data.isSuccess = true;
       data.message = 'game report is added!';
+      return data;
+    }
+    else {
+      throw new Error('user does not exists')
+    }
+  }
+
+  async getCardgamehistory(userId: number): Promise<swagger_api_response> {
+    const history = await this._cardgameRepository.find({ where: { userId: userId } });
+    if (history) {
+      const data = new swagger_api_response();
+      data.code = 200;
+      data.isSuccess = true;
+      data.message = 'game report is added!';
+      data.data = history;
       return data;
     }
     else {

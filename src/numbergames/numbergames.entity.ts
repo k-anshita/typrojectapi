@@ -1,12 +1,12 @@
 import { User } from "src/user/user.entity";
-import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Numbergames {
   @PrimaryGeneratedColumn()
   numberid: number;
 
-  @OneToOne(() => User)
+  @ManyToOne(() => User, { cascade: true, onDelete: 'CASCADE' })
   @JoinColumn()
   user: User
 

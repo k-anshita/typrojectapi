@@ -14,7 +14,7 @@ export class TicgamesService {
   ) { }
 
   async ticgamehistory(model: TicgamesDetail): Promise<swagger_api_response> {
-    const user = this._ticgameRepository.find({ where: { userId: model.userId } });
+    const user = await this._ticgameRepository.find({ where: { userId: model.userId } });
     if (user) {
       await this._ticgameRepository.save({
         message: model.message,
@@ -27,7 +27,6 @@ export class TicgamesService {
         modifyBy: 0,
         modifyDate: new Date(),
         roleId: 2
-
       });
       // return 'You are registered successfully.'
       const data = new swagger_api_response();
@@ -55,5 +54,20 @@ export class TicgamesService {
     }
     // return 'Hello World!';
 
+  }
+  
+  async getTicgamehistory(userId: number): Promise<swagger_api_response> {
+    const history = await this._ticgameRepository.find({ where: { userId: userId } });
+    if (history) {
+      const data = new swagger_api_response();
+      data.code = 200;
+      data.isSuccess = true;
+      data.message = 'game report is added!';
+      data.data = history;
+      return data;
+    }
+    else {
+      throw new Error('user does not exists')
+    }
   }
 }

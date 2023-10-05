@@ -1,8 +1,10 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
 import { UserService } from './user.service';
 import { RegisterDetail } from './user.model';
 import { LoginDetail } from './user.model';
 import { swagger_api_response } from 'src/common/swaggerApiResponse.entity';
+
+type NewType = swagger_api_response;
 
 @Controller('user')
 export class UserController {
@@ -18,5 +20,14 @@ export class UserController {
     return await this.userService.login(model)
   }
 
+  @Put('profile')
+  async profile(@Body() model: RegisterDetail): Promise<swagger_api_response> {
+    return await this.userService.profile(model);
+  }
+
+  @Delete('profile/:id')
+  async deleteProfile(@Param('id', new ParseIntPipe()) id: number): Promise<NewType> {
+    return await this.userService.deleteProfile(id);
+  }
 
 }

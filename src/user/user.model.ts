@@ -2,6 +2,8 @@ import { ApiProperty } from "@nestjs/swagger";
 
 export class RegisterDetail {
     @ApiProperty()
+    id: number;
+    @ApiProperty()
     firstname: string;
     @ApiProperty()
     lastname: string;

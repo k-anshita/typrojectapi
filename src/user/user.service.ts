@@ -94,4 +94,69 @@ export class UserService {
   //   })
    
   //   }
+
+  async profile(model: RegisterDetail): Promise<swagger_api_response> {
+    const user = await this._userRepository.findOne({ where: { id: model.id, username: model.username } });
+    // const userfeild = this._userRepository.findOne({
+    //   where: {
+    //     firstname: IsNull(),
+    //     lastname: IsNull(),
+    //     email: IsNull(),
+    //     username: IsNull(),
+    //     password: IsNull(),
+    //     gender: IsNull(),
+    //     date: IsNull()
+    //   }
+    // });
+    if (model.firstname == null || model.lastname == null || model.date == null ||
+      model.gender == null) {
+      throw new Error('All Fields are compulsory, please fill it');
+    }
+
+    if (!user) {
+      throw new Error('User does not exist, Please contact administrator.');
+    }
+    else {
+      const updateDetail = {
+        ...user,
+        firstname: model.firstname,
+        lastname: model.lastname,
+        email: model.email,
+        gender: model.gender,
+        date: model.date,
+        modifyBy: user.id,
+        modifyDate: new Date(),
+      };
+      await this._userRepository.update(user.id, updateDetail);
+      const data = new swagger_api_response();
+      data.code = 200;
+      data.isSuccess = true;
+      data.message = 'Your profile details are updated successfully.';
+      delete updateDetail.password;
+      data.data = updateDetail;
+      return data;
+    }
+  }
+
+  async deleteProfile(id: number): Promise<swagger_api_response> {
+    if (!id) {
+      throw new Error('Please contact admin');
+    }
+    const loginuser = await this._userRepository.findOne({ where: { id: id } });
+
+    if (!loginuser) {
+      throw new Error('Invalid detail, You can\'t permitted to delete your profile');
+    }
+    else {
+      await this._userRepository.delete(loginuser);
+      delete loginuser.password;
+      const data = new swagger_api_response();
+      data.code = 200;
+      data.isSuccess = true;
+      data.message = 'You are login successfully.';
+      data.data = loginuser;
+      return data;
+    }
+
+  }
 }
