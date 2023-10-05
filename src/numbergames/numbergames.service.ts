@@ -16,7 +16,7 @@ export class NumbergamesService {
   ) { }
 
   async numbergames(model: NumbergamesDetail): Promise<swagger_api_response> {
-    const user = this._numbergameRepository.find({ where: { userId: model.userId } });
+    const user = await this._numbergameRepository.find({ where: { userId: model.userId } });
     if (user) {
       await this._numbergameRepository.save({
         message: model.message,
@@ -41,6 +41,19 @@ export class NumbergamesService {
     }
 
   }
-
+  async getnumbergamehistory(userId: number): Promise<swagger_api_response> {
+    const history = await this._numbergameRepository.find({ where: { userId: userId } });
+    if (history) {
+      const data = new swagger_api_response();
+      data.code = 200;
+      data.isSuccess = true;
+      data.message = 'game report is added!';
+      data.data = history;
+      return data;
+    }
+    else {
+      throw new Error('user does not exists')
+    }
+  }
 
 }
