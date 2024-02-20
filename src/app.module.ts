@@ -21,7 +21,7 @@ import { ReviewModule } from './review/review.module';
       host: 'localhost',
       port: 3306,
       username: 'root',
-      password: 'archivirani01',
+      password: 'anshi1234',
       database: 'gaming',
       entities: [User, Cardgames, Ticgames, Numbergames, Review, Role],
       synchronize: true,
